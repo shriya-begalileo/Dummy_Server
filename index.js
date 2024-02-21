@@ -1,18 +1,19 @@
 const express = require ('express')
 const connection = require('./config/db')
 const userRouter = require('./routes/userRoutes')
-
+const { productRouter } = require('./routes/productsRoutes')
+const cors=require('cors')
 const app = express()
 app.use(express.json())
+app.use(cors())
+app.get('/',(req,res)=>{
+  res.send('Welcome to Dummy Server !!')
+})
+app.use('/users', userRouter)
+app.use('/products',productRouter)
+
 
 const PORT = 8080 
-
-app.get('/',(req,res)=>{
-    res.send('Welcome to Dummy Server !!')
-})
-
-app.use('/users', userRouter)
-
 app.listen(PORT,async()=>{
       try {
         await connection()
