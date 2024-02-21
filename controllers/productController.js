@@ -2,7 +2,7 @@ const { ProductModel } = require("../models/products.model")
 
 
 
-const postProduct= async (req,res)=>{
+const postProduct= async(req,res)=>{
     
     const {brand,price,category}=req.body
     try{
@@ -17,9 +17,22 @@ const postProduct= async (req,res)=>{
 
 const getProduct = async(req,res)=>{
     try{
-        const products= await ProductModel.find()
+        let query = {};
+        let sortQuery = {};
+        let searchQuery = {};
+        if (req.query.category) {
+            query.category = req.query.category;
+        }
+        if (req.query.sort) {
+            sortQuery[req.query.sort] = req.query.sortOrder === 'asc' ? 1 : -1;
+        }
+        if (req.query.search) {
+            searchQuery = { name: { $regex: new RegExp(req.query.search, 'i') } };
+        }
+        const products= await ProductModel.find({ ...query, ...searchQuery }).sort(sortQuery)
         res.status(200).json({msg:"products successfully fetched",data:products})
     }
+
     catch(err){
         res.status(400).json({err:err.message})
     }
@@ -47,3 +60,4 @@ const deleteProduct = async(req,res)=>{
     }
 }
 module.exports={postProduct,getProduct,updateProduct,deleteProduct}
+
