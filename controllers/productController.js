@@ -1,7 +1,6 @@
 const { ProductModel } = require("../models/products.model");
 
 const postProduct = async (req, res) => {
-  console.log("dummy");
   const { brand, price, category } = req.body;
   try {
     const product = new ProductModel({ brand, price, category });
