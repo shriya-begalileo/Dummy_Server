@@ -27,7 +27,7 @@ const getProduct = async(req,res)=>{
             sortQuery[req.query.sort] = req.query.sortOrder === 'asc' ? 1 : -1;
         }
         if (req.query.search) {
-            searchQuery = { name: { $regex: new RegExp(req.query.search, 'i') } };
+            searchQuery = { brand: { $regex: new RegExp(req.query.search, 'i') } };
         }
         const products= await ProductModel.find({ ...query, ...searchQuery }).sort(sortQuery)
         res.status(200).json({msg:"products successfully fetched",data:products})
