@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
 })
 app.use('/users', userRouter)
 app.use('/products', productRouter)
-app.use("/fcm",fcmTokenRouter)
+app.use("/fcmNaveen",fcmTokenRouter)
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
@@ -25,6 +25,7 @@ app.post('/send-notification', async(req, res) => {
   const fcmTokens=await FcmTokenModel.find()
   console.log(fcmTokens[fcmTokens.length-1])
   const registrationToken = fcmTokens[fcmTokens.length-1].fcmToken
+  console.log("res",registrationToken)
   console.log("test",req.body)
   const message = {
     notification: {

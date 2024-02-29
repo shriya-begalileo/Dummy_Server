@@ -9,7 +9,7 @@ userRouter.get('/',(req,res)=>{
 })
 
 userRouter.post('/register',registerUser)
-userRouter.post("/fcm",fcmUser)
+userRouter.post("/fcmtoken",fcmUser)
 userRouter.get("/fcmget",getAllfcm)
 
 userRouter.post('/login',loginUser)

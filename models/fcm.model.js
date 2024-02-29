@@ -8,6 +8,6 @@ const fcmSchema = mongoose.Schema({
 
 })
 
-const FcmModel = mongoose.model('fcm',fcmSchema)
+const FcmModel = mongoose.model('fcmtoken',fcmSchema)
 
 module.exports = FcmModel

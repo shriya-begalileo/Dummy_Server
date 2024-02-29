@@ -7,6 +7,6 @@ const fcmTokenSchema = mongoose.Schema({
     
 })
 
-const FcmTokenModel = mongoose.model('fcm',fcmTokenSchema)
+const FcmTokenModel = mongoose.model('fcmNaveen',fcmTokenSchema)
 
 module.exports = FcmTokenModel
