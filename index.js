@@ -6,7 +6,8 @@ const admin = require('firebase-admin');
 const serviceAccount = require('./utils/productsapp-89db0-firebase-adminsdk-h6c3e-e65bd57b91.json');
 
 const cors = require('cors');
-const { TokenModel } = require('./models/token.model');
+const { fcmTokenRouter } = require('./routes/fcmRoutes');
+const FcmTokenModel = require('./models/fcmToken.model');
 const app = express()
 app.use(express.json())
 app.use(cors())
@@ -15,26 +16,15 @@ app.get('/', (req, res) => {
 })
 app.use('/users', userRouter)
 app.use('/products', productRouter)
-
+app.use("/fcm",fcmTokenRouter)
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
-
-app.post('/token',async(req,res)=>{
-     try{
-      const newToken = new TokenModel(req.body)
-      await newToken.save()
-      res.send({message:'Token Saved Successfully'})
-     }
-     catch(err){
-        res.status(400).send({message:'Some error occurred!'})
-     }
-})
-
-app.post('/send-notification', (req, res) => {
+app.post('/send-notification', async(req, res) => {
   // const registrationToken = req.body.token; // Assuming you are sending the token in the request body
-
-  const registrationToken = "ejnNFlICikNSoCFscLAv7O:APA91bF7vdNgK4K1vs5gg1hgwU5jY2lqT5-W7u2QBla57SRu_zBlIGgzhBKFdsWbQnMuRzlTuRfc6nxsduK1UkXgG1wuEkTpONHyR9mR8ifQ_nQxS6siNn0z6Aaoa-Re2fNyMYSIEKhe"
+  const fcmTokens=await FcmTokenModel.find()
+  console.log(fcmTokens[fcmTokens.length-1])
+  const registrationToken = fcmTokens[fcmTokens.length-1].fcmToken
   console.log("test",req.body)
   const message = {
     notification: {
@@ -42,6 +32,7 @@ app.post('/send-notification', (req, res) => {
       body: 'Notification Body',
     },
     token: registrationToken,
+    data:{"screen":"Dashboard"}
   };
 
   admin.messaging().send(message)
