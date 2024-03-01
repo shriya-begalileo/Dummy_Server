@@ -3,7 +3,7 @@ const connection = require("./config/db");
 const userRouter = require("./routes/userRoutes");
 const { productRouter } = require("./routes/productsRoutes");
 const admin = require("firebase-admin");
-const serviceAccount = require("./utils/productsapp-89db0-firebase-adminsdk-h6c3e-e65bd57b91.json");
+const serviceAccount = require("./utils/myauthentication-415307-firebase-adminsdk-s5a1a-f48cd332e3.json");
 
 const cors = require("cors");
 const { fcmTokenRouter } = require("./routes/fcmRoutes");
