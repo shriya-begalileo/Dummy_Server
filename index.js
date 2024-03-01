@@ -26,7 +26,7 @@ admin.initializeApp({
 app.post("/send-notification", async (req, res) => {
   // const registrationToken = req.body.token; // Assuming you are sending the token in the request body
   const fcmTokens = await FcmTokenModel.find();
-  const uniqueFcmToken = await FcmModel.find({ email: "" });
+  const uniqueFcmToken = await FcmModel.find({ email: "alok@carveniche.com" });
  console.log(uniqueFcmToken)
   console.log(uniqueFcmToken[uniqueFcmToken.length - 1].fcmtoken, "alok");
 
